@@ -1,0 +1,33 @@
+<script>
+	$("body").css("background","url("+contextPath+"/assets/img/l_back.jpg)");
+</script>
+<form ng-keydown="loginSubmit(user,$event)" validate class="container-fluid login_wrap" ng-controller="LoginCtrl" ng-init="btndisbled='false'">
+	<div style="position:absolute;width:100%;height:100%;background:#000;top:0;left:0;border-radius:15px;z-index:0;" 
+		class="shadow_all opacity_20">
+	</div>
+	<div style="z-index:22px;position:relative;">
+		<fieldset>
+			<legend>
+				<span style="color:#fff;">会员登录</span>
+				<a href="#/register" style="float:right;margin-right:2px;">注册</a>
+			</legend>
+		</fieldset>
+		<div class="form-group">
+			<div class="input-group">
+			  <span class="input-group-btn">
+			    <div class="btn btn-primary">邮&nbsp;&nbsp;&nbsp;箱</div>
+			  </span>
+			  <input type="text" ng-model="user.email" class="form-control" placeholder="输入你注册的邮箱" required />
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			  <span class="input-group-btn">
+			    <div class="btn btn-primary">密&nbsp;&nbsp;&nbsp;码</div>
+			  </span>
+			  <input type="password" ng-model="user.password" class="form-control" placeholder="6-18位的数字、字母的组合">
+			</div>
+		</div>
+		<button ng-click="loginSubmit(user)" click-disable data-loading-text="正在处理..." type="button" class="btn btn-default btn-lg btn-block">提交登录</button>
+	</div>
+</form>

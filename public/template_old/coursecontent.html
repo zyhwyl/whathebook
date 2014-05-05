@@ -1,0 +1,47 @@
+<div class="common_panel jquery-shadow-raised" ng-controller="CourseContentCtrl" style="cursor:default;">
+	<div content-fresh id="global_loading"><i class="icon-spinner icon-spin"></i> 正在加载...</div>
+	<div class="course_content_wrap_front hide">
+		<h2>{{course.name}} 
+			<span class="countdown" ng-show="!course.start_course"><i class="icon-time"></i> 
+				课程已通过，将于下周一开始正式上课，还剩{{course.abs_diff_days}}天</span>
+			<span class="countdown" ng-show="course.start_course"><i class="icon-time"></i> 
+				课程学习已正式开始,已过了{{course.abs_diff_days}}天</span></h2>
+		<h4>{{course.shortname}}</h4>
+		<div class="line"></div>
+		<p ng-bind-html="contentToHtml"></p>
+		<div class="line"></div>
+		<div class="course_units_panel" ng-repeat="units in course.units_list" >
+			<h4 ng-class="expression">{{units.name}}
+				<a  href="#/unitscontent/{{units.id}}/{{course.id}}" 
+					ng-show="units.show_enter&&course.start_course" 
+					class="button button-rounded button-tiny button-units"><i class="icon-linkedin-sign"></i> 进入学习</a>
+				<d  ng-show="!units.show_enter&&course.start_course" 
+					class="units_tips">
+					该单元只有在{{course.units_list[$index-1].name}}完成后,才可进行学习!</d>
+			</h4>
+			<p fjj-bind-html-unsafe="{{units.desc}}"></p>
+		</div>
+		<!-- <div class="panel panel-default">
+		  <div class="panel-heading">单元列表</div>
+		  <ul class="list-group">
+		    <li class="list-group-item" ng-repeat="units in course.units_list">
+				<h4>{{units.name}}
+				<a  href="#/unitscontent/{{units.id}}/{{course.id}}" 
+					ng-show="units.show_enter&&course.start_course" 
+					class="btn btn-link units_enter_btn"><i class="icon-linkedin-sign"></i> 进入学习</a>
+				<a  href="javascript:;" 
+					ng-show="!units.show_enter&&course.start_course" 
+					class="btn btn-link un_units_enter_btn">
+					该单元只有在{{course.units_list[$index-1].name}}完成后,才可进行学习</a>
+				<a  href="#/unitscontent/{{units.id}}/{{course.id}}"
+					ng-show="{{!course.start_course}}" class="btn btn-link units_enter_btn">
+	    			<i class="icon-eye-open" style="color:#000;"></i> 预览</a>
+				</h4>
+				<div class="clear"></div>
+				<p fjj-bind-html-unsafe="{{units.desc}}"></p>
+		    </li>
+		  </ul>
+		</div> -->
+		<div class="alert alert-danger" ng-show="course.errorshow">{{course.error}}</div>
+	</div>
+</div>

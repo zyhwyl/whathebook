@@ -1,0 +1,12 @@
+<div class="front_fresh_body" ng-controller="tCourseCtrl">
+	<div content-fresh id="global_loading"><i class="icon-globe icon-spin"></i> 正在获取数据...</div>
+	<div class="course_panel_pass jquery-shadow-light" 
+		 shadow-animate-panel  
+		 style="padding:16px 10px;"
+		 ng-repeat="course in courseList" 
+		 ng-click="enterCrouse($index)" >
+	    <h4 class="list-group-item-heading">{{course.name}}</h4>
+	    <p class="list-group-item-text">{{course.summary}}</p>
+	</div>
+	<div class="alert alert-danger" ng-show="courseList.error==1">对不起，你还没有权限！！</div>
+</div>

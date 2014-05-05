@@ -1,0 +1,54 @@
+<style type="text/css">
+b:hover{text-decoration:underline;}
+</style>
+<div class="common_panel jquery-shadow-raised" ng-controller="tCourseContentCtrlAssignment" style="position:relative;">
+<t-top-nav selected="assignment"></t-top-nav>
+<div class="clear"></div>
+<div class="t_discus_wrap" click-disable clear-textarea kind-editor>
+	<div content-fresh id="global_loading">
+		<i class="icon-globe icon-spin"></i> 正在获取数据...
+	</div>
+	<div class="list-group">
+	  <a href="javascript:;" class="list-group-item" 
+	  	ng-repeat="assignment in assignmentList" style="position:relative;">
+	  	<div style="font-size:12px;color:#000;">
+	  		{{assignment.user.name}} 于 {{assignment.created_at}}
+	  		提交了 
+	  		<b ng-click="showTaskContent($index)">{{assignment.task.unit.name}}--{{assignment.task.name}}</b> 作业 
+	  		<b ng-click="showAssignment($index)">查看</b>
+	  		<b ng-click="setAssignmentStatus($index,1)" ng-show="assignment.is_complete==0">设为完成</b>
+	  		<b ng-show="assignment.is_complete==1">已通过</b>
+	  		&nbsp;<b title="查看详细" ng-click="enterAssignmentDetail(assignment.id);"><i class="icon-share"></i></b>
+	  		<img ng-src="{{loading_img}}" ng-show="assignment.show_loading" >
+	    </div>
+	    <div class="t_assignment_list_btns">
+	    	<i class="icon-exclamation-sign" ng-show="assignment.is_complete==0" title="未完成"></i>
+	    </div>
+	    <div class="t_assignment_back" ng-show="assignment.taskcontent_show">
+	    	<h4> 任务内容：</h4>
+	    	<ul class="t_assignment_response_list" ng-repeat="task_list in assignment.task.task_list_list">
+	    		<li fjj-bind-html-unsafe="{{task_list.desc}}"></li>
+	    	</ul>
+	    	<div class="clear"></div>
+	    </div>
+	    <div class="t_assignment_back" ng-show="assignment.assignment_show">
+	    	<h4> 作业内容：</h4>
+	    	<p style="padding:0 5px;" fjj-bind-html-unsafe="{{assignment.content}}"></p>
+	    	<ul class="t_assignment_response_list" ng-repeat="discus in assignment.discus_list">
+	    		<li tool-tip="{{discus.created_at}}" data-placement="left">{{discus.user.name}} : {{discus.content}}</li>
+	    	</ul>
+	    	<div style="margin:3px auto;width:96%;">
+				<textarea placeholder="填写回复内容..." class="form-control"
+					ng-model="assignment.discus_content" rows="3"></textarea>
+				<b class="btn btn-link task_response_btn" ng-click="showAssignment($index)">
+					<i class="icon-ban-circle"></i> 收起</b>
+				<b ng-click="saveAssignDiscus($index)" data-loading-text="wait..." 
+					class="btn btn-link task_response_btn" id="saveAssignDiscus{{assignment.id}}">
+					<i class="icon-ok"></i> 回复</b>
+			</div>
+	    	<div class="clear"></div>
+	    </div>
+	  </a>
+	</div>
+</div>
+</div>

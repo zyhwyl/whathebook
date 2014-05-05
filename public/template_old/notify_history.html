@@ -1,0 +1,15 @@
+<div class="common_panel jquery-shadow-raised" ng-controller="NotifyHistoryCtrl">
+	<div click-disable content-fresh id="global_loading"><i class="icon-spinner icon-spin"></i> 正在加载...</div>
+	<div style="float:left;margin:20px 10px;font-size:20px;">全部通知</div>
+	<div class="notify_all_panel" ng-repeat="notify in notifyList">
+		<user-photo class="avatar_discus"
+					path="{{notify.user_pub_ext.photo}}"></user-photo>
+		<span ng-show="notify.status==1" class="notify_all_title notify_all_unread">
+			{{notify.user_pub.name}} {{notify.content}} {{notify.created_at}}</span>
+		<span ng-show="notify.status==0" class="notify_all_title notify_all_readed">
+			{{notify.user_pub.name}} {{notify.content}} {{notify.created_at}}</span>
+		<br>
+		<span fjj-bind-html-preview="{{notify.all_content}}" class="notify_all_previewcontent" count="100"></span>
+		<div class="clear"></div>
+	</div>
+</div>

@@ -1,0 +1,50 @@
+<div class="common_panel jquery-shadow-raised" ng-controller="UnitsContentCtrl">
+	<div content-fresh id="global_loading"><i class="icon-spinner icon-spin"></i> 正在加载...</div>
+	<ul class="task_list_front" click-disable clear-textarea kind-editor>
+		<li>
+			<div style="padding-left:0;">
+				<h3>{{units.name}}&nbsp;&nbsp;
+					<a href="javascript:;" ng-show="!units.start_course" class="task_back_btn">
+		    			<i class="icon-eye-open" style="color:#000;"></i> 预览状态</a>
+				</h3>
+				<h4 fjj-bind-html-unsafe="{{units.desc}}" watch="units.desc"></h4>
+			</div>
+			<div class="line" style="padding-bottom:0;"></div>
+		</li>
+		<li class="task_list_li" ng-repeat="task in units.task_list">
+			<!-- <div class="task_content_shield opacity_20" 
+				ng-show="!task.show_enter||!units.start_course"></div> -->
+			<h4>
+				<p><i class="icon-list-ul" style="color:#888;font-size:14px;position:relative;top:-1px;"></i> 
+					{{task.name}} <span style="font-size:12px;">({{task.type.name}})</span>&nbsp;</p>
+				<a  href="javascript:;" ng-show="task.show_enter&&units.start_course" 
+					ng-click="enterTaskContent($index)" style="float:left;margin:1px 3px 0 5px;"
+					class="button button-rounded button-tiny button-units"><i class="icon-linkedin-sign"></i> 进入学习</a>
+				<button ng-show="!task.show_enter||!units.start_course" 
+					style="float:left;margin:1px 0 0 5px;"
+					class="button button-rounded button-tiny button-units" disabled><i class="icon-info-sign"></i> 上一任务完成时可开启</button>
+				<a ng-show="task.is_assignment==1" class="task_assignment_units opacity_60" style="float:left" title="作业已提交">
+					<i class="icon-file-alt"></i></a>
+				<a ng-show="task.is_assignment==1" class="task_assignment_units opacity_60" style="float:left;margin-left:3px;" title="作业已完成">
+					<i class="icon-ok-circle"></i></a>
+				<span style="font-size:12px;color:#bbb;">&nbsp;完成度:{{task.complete_progress | numFilter}}%</span>
+			</h4>
+			<ul class="units_task_content_list">
+				<li class="task_content_list_li">
+					<h5>{{task.desc}}</h5></li>
+				<li class="units_task_content_list_li" style="font-size:12px;"
+					ng-repeat="task_content in task.task_list_list">
+					<div class="units_task_content_list_li_content">
+						<p fjj-bind-html-unsafe="{{task_content.desc}}"></p>
+					</div>
+				</li>
+			</ul>
+			<!-- 作业部分 -->
+			<!-- <div class="assignment_submit_btns">
+				<a ng-show="task.is_assignment==1" href="javascript:;" >作业已提交</a>
+			</div> -->
+			<div class="clear" style=""></div>
+		</li>
+	</ul>
+	<div class="alert alert-danger" ng-show="units.error==1">对不起，你还没有该课程的权限！！</div>
+</div>

@@ -1,0 +1,52 @@
+<div content-fresh id="global_loading">
+	<i class="icon-globe icon-spin"></i> 正在获取数据...
+</div>
+<div class="common_panel jquery-shadow-raised" ng-controller="tAssignmentDetailCtrl" style="padding-top:20px;" ng-show="contentshow">
+	{{assignment.user.name}} 于 {{assignment.created_at}} 提交了作业 
+	&nbsp;&nbsp;
+	<a href="#/t/coursecontent/{{courseId}}/assignment" style="font-size:12px;color:#555;">
+		<i class="icon-reply"></i> 返回</a>
+	<h3>{{assignment.task.unit.name}}----{{assignment.task.name}}</h3>
+	<hr>
+	<div class="panel panel-default"  click-disable clear-textarea kind-editor>
+	  <div class="panel-heading">
+	    <h4 class="panel-title">任务内容</h4>
+	  </div>
+	  <div class="panel-body">
+	  	<ul class="t_assignment_task_list">
+		  <li ng-repeat="task_content in assignment.task.task_list_list">
+		    <p fjj-bind-html-unsafe="{{task_content.desc}}"></p>
+		  </li>
+		</ul>
+	  </div>
+	</div>
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h4 class="panel-title">作业内容</h4></div>
+	  <div class="panel-body">
+	  	<p fjj-bind-html-unsafe="{{assignment.content}}" watch="assignment.content" syntaxlight="true"></p>
+	  </div>
+	</div>
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h4 class="panel-title">讨论内容</h4></div>
+	  <div class="panel-body">
+	  	<ul class="t_assignment_task_list" style="position:relative;left:-18px;">
+		  <li ng-repeat="discus in assignment.discus_list" style="padding:7px;">
+		  	<div class="discus_content_photo">
+				<user-photo class="avatar_small shadow_all" path="{{discus.user.user_ext.photo}}" size="36"></user-photo>
+			</div>
+		    <div style="width:90%;float:left;">
+		    	<span style="font-size:12px;">{{discus.user.name}} {{discus.created_at}}</span><br>
+		    	<p fjj-bind-html-unsafe="{{discus.content}}" syntaxlight="true"></p></div>
+		    <div class="clear"></div>
+		  </li>
+		  <li>
+			<ck-editor id="editor{{assignment.id}}" content="{{task_discus.content}}" no-delay="true"></ck-editor>
+			<b ng-click="saveAssignDiscus()" data-loading-text="wait..." 
+				 class="btn button button-rounded button-tiny button-units task_response_btn" 
+				 id="saveAssignDiscus{{assignment.id}}">
+				<i class="icon-ok"></i> 评论</b>
+		  </li>
+		</ul>
+	  </div>
+	</div>
+</div>

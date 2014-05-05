@@ -1,0 +1,276 @@
+<div class="common_panel jquery-shadow-raised" ng-controller="TaskContentCtrl" click-disable clear-textarea>
+	<div content-fresh id="global_loading"><i class="icon-spinner icon-spin"></i> 正在加载...</div>
+	<div class="main_task_content" ng-show="show_content">
+		<h4>
+			<p>
+				<i class="icon-list-ul" style="color:#888;font-size:14px;position:relative;top:-1px;left:3px;"></i> 
+				<span style="position:relative;left:12px;">{{task.name}}</span>
+			</p>
+			<div style="float:left;font-size:12px;margin:2px 0 0 1px;width:32px;">{{task.complete_progress | numFilter}}%</div>
+			<div class="progress" id="progress{{task.id}}" style="height:10px;position:relative;top:3px;">
+			  <div progress-bar="{{task.complete_progress}}" class="progress-bar progress-bar-task" 
+			  	role="progressbar"></div>
+			</div>
+		</h4>
+		<ul class="task_content_list">
+			<li class="task_content_list_li" ng-repeat="task_content in task.task_list_list">
+				<div class="task_content_list_li_content">
+					<div class="task_complete">
+						<input i-check-com task-complete-checked="{{task.id}},{{task_content.id}},{{task_content.is_complete}}" type="checkbox" name="task_complete"/>
+					</div>
+					<a  class="task_content_title" 
+						fjj-bind-html-unsafe="{{task_content.desc}}" 
+						href="#/taskdiscuslist/{{task_content.id}}/{{courseId}}/{{task.id}}"></a>
+					<div class="right_flow_btn">
+						<i ng-click="showDiscusEdit($index)" class="icon-comments-alt" title="发起新讨论"></i>
+						<a ng-click="showDiscusList($index,task_content.id)" class="discus_count" href="javascript:;">
+							{{task_content.discus_count}}</a>
+					</div>
+				</div>
+				<div class="discus_wrap" ng-show="showDiscusEdit[$index]">
+					<ul class="task_discus_list">
+						<li>
+							<ck-editor ng-model="task_content.discus" id="editor{{task_content.id}}"></ck-editor>
+							<a  class="btn button button-rounded button-tiny button-units task_response_btn"
+								ng-click="showDiscusEdit($index)">
+								取消</a>
+							<a  ng-click="saveDiscus(task_content.id,task_content.discus,'',$index)" 
+								data-loading-text="wait..."
+								class="btn button button-rounded button-tiny button-units task_response_btn"
+								id="saveDiscus{{task_content.id}}">
+								 发起讨论</a>
+						</li>
+					</ul>
+				</div>
+				<!-- task discus begin -->
+				<div class="discus_wrap" ng-show="showDiscusList[$index]">
+					<div id="discus_list_loading{{task_content.id}}">
+						<i class="icon-spinner icon-spin"></i> 	正在加载...</div>
+					<ul class="task_discus_list">
+						<li class="task_discus_li" ng-repeat="task_discus in task_discus_list">
+							<user-photo path="{{task_discus.user.user_ext.photo}}" 
+								class="avatar_discus"></user-photo>
+							<div class="task_discus_panel">
+								<div ng-mouseover="task_discus.show_edit=true" ng-mouseout="task_discus.show_edit=false">
+									<a class="discus_username">{{task_discus.user.name}}</a> {{task_discus.created_at}}
+									<a href="javascript:;" ng-show="task_discus.is_edit_auth&&task_discus.show_edit"
+										title="修改" class="task_discus_edit_btn" 
+										ng-click="task_discus.show_edit_content=true">
+												<i class="icon-edit"></i></a>
+									<a href="javascript:;" id="task_discus_delete{{task_discus.id}}"
+										ng-show="task_discus.is_edit_auth&&task_discus.show_edit"
+										title="删除" class="task_discus_delete_btn" 
+										ng-click="deleteDiscus(task_discus.id)">
+												<i class="icon-trash"></i></a>
+									<span ng-show="task_discus.show_edit" style="color:#ddd;">
+										&nbsp;&nbsp;更新于:{{task_discus.updated_at}}</span>
+									<div ng-show="!task_discus.show_edit_content" 
+										syntaxlight="true"
+										id="discus_content{{task_discus.id}}"
+										class="discus_content no_style_content" 
+										fjj-bind-html-unsafe="{{task_discus.content}}">
+									</div>
+									<div class="editor_wrap" ng-show="task_discus.show_edit_content">
+										<ck-editor id="editor{{task_discus.id}}" 
+											content="{{task_discus.content}}"></ck-editor>
+										<a class="btn button button-rounded button-tiny button-units task_response_btn" 
+											 ng-click="task_discus.show_edit_content=false">
+											<i class="icon-ban-circle"></i> 取消</a>
+										<a ng-click="editDiscus(task_discus.id)"
+											data-loading-text="wait..." 
+											class="btn button button-rounded button-tiny button-units task_response_btn" 
+											id="editDiscus{{task_discus.id}}">
+											<i class="icon-save"></i> 修改</a>
+									</div>
+								</div>
+								<div class="clear" style="padding:4px 0;"></div>
+								<div class="child_discus_list" ng-repeat="child in task_discus.child_list">
+									<user-photo path="{{child.user.user_ext.photo}}" 
+												class="avatar_discus" 
+												style="top:4px;margin-right:5px;">
+									</user-photo>
+									<div style="float:left;width:92.5%;" ng-mouseover="child.show_edit=true" 
+										 ng-mouseout="child.show_edit=false">
+										<a class="dicus_username">{{child.user.name}}</a> {{child.created_at}}
+										<a href="javascript:;" id="task_discus_delete{{child.id}}"
+											ng-click="child.show_edit_content=true"
+											ng-show="child.is_edit_auth&&child.show_edit"
+											title="修改" class="task_discus_edit_btn">
+												<i class="icon-edit"></i></a>
+										<a href="javascript:;" 
+											ng-show="child.is_edit_auth&&child.show_edit"
+											title="删除" class="task_discus_delete_btn" 
+											ng-click="deleteDiscus(child.id,true)">
+													<i class="icon-trash"></i></a>
+										<span ng-show="child.show_edit" style="color:#ddd;">
+											&nbsp;&nbsp;更新于:{{task_discus.updated_at}}</span>
+										<div class="child_discus_content no_style_content" 
+											 id="discus_content{{child.id}}"
+											 ng-show="!child.show_edit_content" 
+											 fjj-bind-html-unsafe="{{child.content}}"
+											 syntaxlight="true"></div>
+										<div class="editor_wrap" ng-show="child.show_edit_content">
+											<ck-editor id="editor{{child.id}}" 
+												content="{{child.content}}"></ck-editor>
+											<a class="btn button button-rounded button-tiny button-units task_response_btn" 
+												 ng-click="child.show_edit_content=false">
+												<i class="icon-ban-circle"></i> 取消</a>
+											<a ng-click="editDiscus(child.id)"
+												data-loading-text="wait..." 
+												class="btn button button-rounded button-tiny button-units task_response_btn" 
+												id="editDiscus{{child.id}}">
+												<i class="icon-save"></i> 修改</a>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="discus_right_btn">
+									<span ng-show="task_discus.is_ok==0">
+										<a href="javascript:;" title="回复" 
+											ng-click="showTaskResponse(task_discus.id)">
+											<i class="icon-comment-alt"></i></a>&nbsp;&nbsp;
+										<a href="javascript:;"
+											ng-click="setDiscusSolve(task_discus.id,1)" title="设为已解决">
+											<i class="icon-ok"></i></a>&nbsp;&nbsp;
+										<a href="#/taskdiscusdetail/{{task_discus.id}}/{{courseId}}/{{task.id}}" 
+											ng-click="" title="查看详细">
+											<i class="icon-share-alt"></i></a>
+											<img src="{{loading_img}}" ng-show="task_discus.show_loading" >
+									</span>
+									<span ng-show="task_discus.is_ok==1" style="font-size:12px;">
+										<i class="icon-ok-circle" style="color:green;"></i> 已解决</span>
+								</div>
+								<div class="task_child_repsonse" ng-show="task_discus.response_show">
+									<ck-editor ng-model="task_discus.discus" id="childeditor{{task_discus.id}}">
+									</ck-editor>
+									<a class="btn button button-rounded button-tiny button-units task_response_btn" 
+										 ng-click="showTaskResponse(task_discus.id)">
+										取消</a>
+									<a ng-click="saveDiscusChild(task_content.id,task_discus.id,$index)" 
+										data-loading-text="wait..." 
+										class="btn button button-rounded button-tiny button-units task_response_btn" 
+										id="saveDiscus{{task_discus.id}}">
+										回复讨论</a>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</li>
+					</ul>
+				</div>
+				<!-- task discus end -->
+			</li>
+		</ul>
+		<!-- 作业部分 -->
+		<!-- assignment submit begin-->
+		<div class="assignment_submit_btns">
+			<a ng-show="task.is_assignment==0&&task.type.id!=4" 
+				class="button button-rounded button-tiny button-units" href="javascript:;"
+				href="javascript:;" ng-click="showSaveAssignment(task.id)" ><i class="icon-reorder"></i> 提交作业</a>
+			<a ng-show="task.is_assignment==1" title="查看作业" 
+				class="assignment_tag" style="margin-right:4px;"
+				ng-click="showAssignment($index,task.id)" href="javascript:;">
+				<i class="icon-eye-open"></i></a>
+			<a ng-show="task.is_assignment==1" title="已提交" 
+				class="assignment_tag"
+				ng-click="showAssignment($index,task.id)" >
+				<i class="icon-file-alt"></i></a>&nbsp;
+			<a ng-show="task.is_assignment_complete==1"title="作业已完成" class="assignment_tag">
+				<i class="icon-ok-circle"></i></a>
+		</div>
+		<div class="clear"></div>
+		<div class="discus_assignment_wrap" ng-show="task.showSaveAssignment">
+			<ck-editor ng-model="task_discus.discus" id="assignment{{task.id}}"></ck-editor>
+			<a class="btn button button-rounded button-tiny button-units task_response_btn" 
+				ng-click="showSaveAssignment(task.id)">
+				<i class="icon-ban-circle"></i> 取消</a>
+			<a ng-click="saveAssigment($index,task.id)" data-loading-text="wait..." 
+				class="btn button button-rounded button-tiny button-units task_response_btn" 
+				id="saveAssigment{{task.id}}">
+				<i class="icon-save"></i> 提交</a>
+		</div>
+		<div class="discus_assignment_wrap" ng-show="showEditAssignment[$index]">
+			<ck-editor  id="assignment{{task.assignment.id}}" 
+						content="{{task.assignment.content}}">
+			</ck-editor>
+			<a class="btn button button-rounded button-tiny button-units task_response_btn" 
+				ng-click="showEditAssignment($index)">
+				<i class="icon-ban-circle"></i> 取消</a>
+			<a ng-click="editAssigment($index,task.assignment.id,task.assignment.content,task.id)" 
+				data-loading-text="wait..."
+				class="btn button button-rounded button-tiny button-units task_response_btn"  
+				id="editAssigment{{task.assignment.id}}">
+				<i class="icon-ok"></i> 修改</a>
+		</div>
+		<!-- assignment submit end-->
+		<!-- assignment content begin-->
+		<div class="discus_assignment_content_wrap jquery-shadow" ng-show="showAssignment[$index]&&task.is_assignment==1">
+			<div id="assignment_loading{{task.id}}"><i class="icon-spinner icon-spin"></i> 	正在加载...</div>
+			<p fjj-bind-html-active class="no_style_content" syntaxlight="true"></p>
+			<div class="assignment_response_list" ng-repeat="discus in task.assignment.discus_list">
+				<user-photo path="{{discus.user.user_ext.photo}}" 
+							class="avatar_assignment_discus"></user-photo>
+				<div style="float:left;width:563px;margin-top:-3px;;" 
+					 ng-mouseover="discus.show_edit=true"
+					 ng-mouseout="discus.show_edit=false">
+					<a class="discus_username">{{discus.user.name}}</a> {{discus.created_at}}
+					<a href="javascript:;" ng-show="discus.is_edit_auth&&discus.show_edit"
+						title="修改" class="task_discus_edit_btn" 
+						ng-click="discus.show_edit_content=true">
+								<i class="icon-edit"></i></a>
+					<a href="javascript:;" id="deleteAssignment{{discus.id}}"
+						ng-show="discus.is_edit_auth&&discus.show_edit"
+						title="删除" class="task_discus_delete_btn" 
+						ng-click="assignmentDiscusDelete(discus.id,$index)">
+								<i class="icon-trash"></i></a>
+					<span ng-show="discus.show_edit" style="color:#ddd;">
+						  &nbsp;&nbsp;更新于:{{discus.updated_at}}</span>
+					<br>
+					<span style="font-size:14px" id="assignment_discus{{discus.id}}" class="no_style_content"
+						  fjj-bind-html-unsafe="{{discus.content}}"
+						  syntaxlight="true" 
+						  ng-show="!discus.show_edit_content"></span>
+					<div class="editor_wrap" ng-show="discus.show_edit_content">
+						<ck-editor id="assignment{{discus.id}}" 
+							content="{{discus.content}}"></ck-editor>
+						<a class="btn button button-rounded button-tiny button-units task_response_btn" 
+							 ng-click="discus.show_edit_content=false">
+							<i class="icon-ban-circle"></i> 取消</a>
+						<a ng-click="editAssignmentDiscus(discus.id)"
+							data-loading-text="wait..." 
+							class="btn button button-rounded button-tiny button-units task_response_btn" 
+							id="editAssignmentDiscus{{discus.id}}">
+							<i class="icon-save"></i> 修改</a>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="discus_assignment_btns">
+				<a ng-click="showAssignment($index,task.id)" title="收起" href="javascript:;" class="assignment_tag">
+					<i class="icon-caret-up"></i></a>
+				<a ng-click="showAssignmentResponse($index)" title="评论"
+					href="javascript:;" class="assignment_tag">
+					<i class="icon-comment">({{task.assignment.discus_count}})</i></a>
+				<a  ng-show="task.is_assignment_complete!=1" title="编辑" 
+					ng-click="showEditAssignment($index,task.assignment.id,task.assignment.content,task.id)" 
+					href="javascript:;" class="assignment_tag">
+					<i class="icon-pencil"></i></a>
+				<div class="clear"></div>
+			</div>
+			<div class="assigment_response" ng-show="showAssignmentResponse[$index]">
+				<ck-editor ng-model="task.assignment.discus" id="assignmentDiscus{{task.assignment.id}}"></ck-editor>
+				<a class="btn button button-rounded button-tiny button-units task_response_btn" 
+					ng-click="showAssignmentResponse($index)">
+					<i class="icon-ban-circle"></i> 取消</a>
+				<a ng-click="saveAssignmentDiscus($index)" 
+					data-loading-text="wait..."
+					class="btn button button-rounded button-tiny button-units task_response_btn" 
+					id="saveAssignmentDiscus{{task.assignment.id}}">
+					<i class="icon-save"></i> 提交</a>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<!-- assignment content end-->
+		<div class="clear"></div>
+	</div>
+</div>

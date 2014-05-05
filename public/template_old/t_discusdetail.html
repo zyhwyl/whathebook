@@ -1,0 +1,51 @@
+<div class="common_panel jquery-shadow-raised" ng-controller="tDiscusDetailCtrl">
+<div content-fresh id="global_loading" class="butter_bar">
+	<i class="icon-refresh icon-spin icon-2x"></i>
+</div>
+<h3 style="padding:5px 0;">{{discus.task_content.unit_task.unit.name}}----{{discus.task_content.unit_task.name}}</h3>
+<div class="panel panel-default"  click-disable clear-textarea kind-editor>
+  <div class="panel-heading">
+    <h4 class="panel-title">任务内容</h4>
+  </div>
+  <div class="panel-body">
+  	<h5 style="padding:5px 0;" ng-bind-html="contentToHtml"></h5>
+  </div>
+</div>
+<div class="panel panel-default"  click-disable clear-textarea kind-editor>
+  <div class="panel-heading">
+    <h4 class="panel-title">讨论内容</h4>
+  </div>
+  <div class="panel-body">
+  	<div class="discus_content_photo">
+		<user-photo class="avatar_small shadow_all" path="{{discus.user.user_ext.photo}}" size="36" 
+			path-watch="discus.user.user_ext.photo"></user-photo>
+	</div>
+	<div style="width:90%;float:left;">
+		<span style="font-size:12px;">{{discus.user.name}} {{discus.created_at}}</span><br>
+		<span fjj-bind-html-unsafe="{{discus.content}}" watch="discus.content" syntaxlight="true"></span></div>
+	<ul class="t_discus_child_list">
+		<li ng-repeat="child in discus.child_list" style="padding:10px 0;">
+			<div class="discus_content_photo">
+				<user-photo class="avatar_small shadow_all" path="{{child.user.user_ext.photo}}" size="36"></user-photo>
+			</div>
+			<div style="width:90%;float:left;">
+				<span style="font-size:12px;">{{child.user.name}} {{child.created_at}}</span><br>
+				<span fjj-bind-html-unsafe="{{child.content}}" syntaxlight="true"></span>
+			</div>
+		</li>
+	</ul>
+  </div>
+</div>
+<div style="float:left;margin-top:7px;width:100%;">
+	<ck-editor id="editor{{discus.id}}" content="{{task_discus.content}}" no-delay="true"></ck-editor>
+	<span style="margin:10px 0;float:right;">
+	<a class="btn button button-rounded button-tiny button-units task_response_btn" 
+		onclick="history.go(-1)">
+		<i class="icon-circle-arrow-left"></i> 后退</a>
+	<a ng-click="saveDiscusResponse()" data-loading-text="wait..." 
+		class="btn button button-rounded button-tiny button-units task_response_btn"
+		id="saveDiscusResponse{{discus.id}}">
+		<i class="icon-ok"></i> 回复</a>
+	</span>
+</div>
+</div>

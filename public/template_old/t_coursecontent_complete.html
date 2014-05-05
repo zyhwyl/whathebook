@@ -1,0 +1,32 @@
+<style type="text/css">
+b:hover{text-decoration:underline;cursor:pointer;}
+</style>
+<div class="common_panel jquery-shadow-raised" ng-controller="tCourseContentCtrlComplete" style="position:relative;">
+<t-top-nav selected="complete"></t-top-nav>
+<div class="clear"></div>
+<div class="t_discus_wrap" click-disable clear-textarea kind-editor>
+	<div content-fresh id="global_loading">
+		<i class="icon-globe icon-spin"></i> 正在获取数据...
+	</div>
+	<span>&nbsp;已有学生完成任务列表：</span>
+	<div class="list-group" style="margin-top:5px;">
+	  <a class="list-group-item" ng-repeat="task in taskList" style="position:relative;">
+	  	<div style="font-size:12px;color:#000;">
+	  		{{task.unit.name}}--{{task.name}}&nbsp;<b ng-click="showComplete($index)">点击查看</b>
+	    </div>
+	    <ul ng-show="task.show_complete">
+	    	<li ng-repeat="completeUser in task.completeUser">
+	    		<div class="photo_font_wrap" style="float:left;text-align:center;">
+	    			<user-photo path="{{completeUser.user_ext.photo}}" size="38" class="avatar_normal shadow_all_white"></user-photo>
+	    			<span>{{completeUser.user.name}}</span>
+	    		</div>
+	    		<div class="progress" id="progress{{task.id}}" style="position:relative;top:10px;left:10px;">
+				<div progress-bar="{{completeUser.count*100/task.task_list_list.length}}" class="progress-bar progress-bar-task" role="progressbar"></div>
+				</div>
+				<div class="clear"></div>
+	    	</li>
+	    </ul>
+	  </a>
+	</div>
+</div>
+</div>

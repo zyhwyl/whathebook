@@ -1,0 +1,44 @@
+<div class="common_panel jquery-shadow-raised" ng-controller="TaskDiscusDetailCtrl">
+<div click-disable content-fresh id="global_loading"><i class="icon-spinner icon-spin"></i> 正在加载...</div>
+<h4 style="padding-top:8px;" fjj-bind-html-unsafe="{{discus.task_content.desc}}" watch="discus.task_content.desc"></h4>
+<hr>
+<div>
+	<div class="discus_content_photo">
+		<user-photo class="avatar_discus" style="top:5px;"
+					path="{{discus.user.user_ext.photo}}" 
+					path-watch="discus.user.user_ext.photo"></user-photo>
+	</div>
+	<p class="discus_detail_content">
+		<span style="font-size:12px;"><a href="">{{discus.user.name}}</a> {{discus.created_at}}&nbsp;
+			<span ng-show="discus.is_ok==1" style="font-size:12px;">
+				<i class="icon-ok-circle" style="color:green;"></i> 已解决</span>
+		</span>
+		<br><span fjj-bind-html-unsafe="{{discus.content}}" watch="discus.content" syntaxlight="true"></span></p>
+	<div class="clear"></div>
+	<ul class="discus_content_list_child">
+		<li ng-repeat="child in discus.child_list">
+			<div class="discus_content_photo">
+				<user-photo class="avatar_discus" style="top:5px;" path="{{child.user.user_ext.photo}}"></user-photo>
+			</div>
+			<p class="discus_detail_content">
+				<span style="font-size:12px;"><a href="">{{child.user.name}}</a> {{child.created_at}}</span><br>
+				<span fjj-bind-html-unsafe="{{child.content}}"></span></p>
+			<div class="clear"></div>
+		</li>
+		<div class="task_child_repsonse" ng-show="discus.is_ok!=1">
+			<ck-editor id="editor{{discus.id}}" no-delay="true">
+			</ck-editor>
+			<a ng-show="discus.is_ok!=1" href="javascript:;" style="top:5px;"
+				id="setDiscusSolve{{discus.id}}"
+				class="btn button button-rounded button-tiny button-units task_response_btn"
+				ng-click="setDiscusSolve(discus.id,1)">
+				<i class="icon-ok-circle"></i> 设为已解决</a>
+			<a  ng-click="saveDiscus(discus.task_content.id,discus.discus,discus.id)"  style="top:5px"
+				data-loading-text="wait..."
+				class="btn button button-rounded button-tiny button-units task_response_btn" id="saveDiscus{{discus.id}}">
+				<i class="icon-ok"></i> 回复</a>
+			<div class="clear"></div>
+		</div>
+	</ul>
+</div>
+</div>

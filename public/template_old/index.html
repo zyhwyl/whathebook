@@ -1,0 +1,35 @@
+<style type="text/css">
+b{font-size:12px;color:#000;font-weight:normal;cursor:pointer;}
+b:hover{color:#000;}
+d{font-size:12px;color:#000;font-weight:normal;}
+</style>
+<div class="front_fresh_body" ng-controller="CourseCtrl">
+	<div content-fresh id="global_loading" click-disable clear-textarea>
+		<i class="icon-spinner icon-spin"></i> 正在加载...</div>
+	
+	<div ng-repeat="course in courseList" ng-click="enterCrouse($index)" ng-show="{{course.is_allow}}"  
+		 class="course_panel_pass jquery-shadow-light" shadow-animate-panel>
+		<h4>{{course.name}}&nbsp;&nbsp;<span><i class="icon-ok-circle green"></i> 已通过审核,点击进入</span></h4>
+		<p>{{course.summary}}</p>
+	</div>
+	<div ng-repeat="course in courseList" ng-show="!{{course.is_allow}}" 
+		 class="course_panel box-shadow" shadow-animate-panel>
+		<h4>{{course.name}}
+			<span>
+				<a ng-show="{{!course.is_allow}}" class="button button-rounded button-tiny button-index" 
+					art-dialog="{{course.desc}}" art-width="700px">
+					<i class="icon-eye-open"></i> 预览</a>
+				&nbsp;
+				<d ng-show="course.is_apply"><i class="icon-ok-circle" style="color:green;"></i> 已申请</d>
+				<d ng-show="course.is_reject" tool-tip="拒绝理由 : {{course.reject_message}}" data-placement="right"><i class="icon-exclamation-sign" style="color:red;"></i> 被拒绝</d>
+				<a ng-show="!course.is_apply&&!course.is_reject" 
+					art-dialog-course-apply  
+					class="button button-rounded button-tiny button-index" 
+					><i class="icon-shopping-cart"></i> 课程申请</a>
+			</span>
+		</h4>
+		<p>{{course.summary}}</p>
+	</div>
+	<div class="clear"></div>
+	<div class="alert alert-danger" ng-show="courseList.error==1">对不起，你还没有权限！！</div>
+</div>

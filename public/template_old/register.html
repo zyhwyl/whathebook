@@ -1,0 +1,69 @@
+<form class="container-fluid login_wrap" ng-controller="RegisterCtrl">
+<fieldset click-disable>
+	<legend>
+		<span>会员注册</span>
+		<a href="javascipt:location.reload();" style="float:right;margin:0 5px;">登录</a>
+	</legend>
+</fieldset>
+<div class="form-group">
+	<div class="input-group">
+	  <span class="input-group-btn">
+	    <div class="btn btn-primary">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 名</div>
+	  </span>
+	  <input type="text" ng-model="user.name" class="form-control" placeholder="请输入你的真实名字">
+	</div>
+</div>
+<div class="form-group">
+	<div class="input-group">
+	  <span class="input-group-btn">
+	    <div class="btn btn-primary">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 箱</div>
+	  </span>
+	  <input type="text" ng-model="user.email" class="form-control" placeholder="test@example.com 邮箱将会是你的登录账户">
+	</div>
+</div>
+<div class="form-group">
+	<div class="input-group">
+	  <span class="input-group-btn">
+	    <div class="btn btn-primary">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 码</div>
+	  </span>
+	  <input type="password" ng-model="user.password" class="form-control" placeholder="6-18位的数字、字母的组合">
+	</div>
+</div>
+<div class="form-group">
+	<div class="input-group">
+	  <span class="input-group-btn">
+	    <div class="btn btn-primary">重复密码</div>
+	  </span>
+	  <input type="password" ng-model="user.repassword" class="form-control" placeholder="确认密码输入无误！">
+	</div>
+</div>
+<div class="form-group">
+	<div class="input-group">
+	  <span class="input-group-btn">
+	    <div class="btn btn-primary">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 别</div>
+	  </span>
+	  <div class="radio_block">
+	  	<div class="radio_wrap">
+	  		<input value="0" type="radio" ng-model="user.gender" id="man" ng-checked="true" name="gender">
+	  	</div>
+	  	<label for="man">男</label> 
+	  </div>
+	  <div class="radio_block">
+	  	<div class="radio_wrap">
+	  		<input value="1" type="radio" ng-model="user.gender" id="woman" name="gender">
+	  	</div>
+	  	<label for="woman">女</label>
+	  </div>
+	</div>
+</div>
+<div class="form-group">
+	<div class="input-group">
+	  <span class="input-group-btn">
+	    <div class="btn btn-primary">验&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 证</div>
+	  </span>
+	  <input type="text" class="form-control" placeholder="var i=3; i--; i=?">
+	</div>
+</div>
+<button id="register_btn" data-loading-text="正在处理..." 
+	ng-click="registerInfo()" type="button" class="btn btn-default btn-lg btn-block" >提交信息</button>
+</form>

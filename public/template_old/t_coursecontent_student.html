@@ -1,0 +1,16 @@
+<style type="text/css">
+b:hover{text-decoration:underline;cursor:pointer;}
+</style>
+<div class="common_panel jquery-shadow-raised" ng-controller="tCourseContentCtrlStudent" style="position:relative;">
+<t-top-nav selected="student"></t-top-nav>
+<div class="clear"></div>
+<div class="t_discus_wrap" click-disable clear-textarea kind-editor>
+	<div content-fresh id="global_loading">
+		<i class="icon-globe icon-spin"></i> 正在获取数据...
+	</div>
+	<div ng-repeat="s in studentList" class="t_student_list">
+		<user-photo path="{{s.student.user_ext.photo}}" class="avatar_big avatar_border shadow_all"></user-photo>
+		<span>{{s.student.name}}</span>
+	</div>
+</div>
+</div>
