@@ -46,6 +46,6 @@ position: relative;
 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.0), 0 0 20px rgba(125, 125, 125, 0.1) inset;
 }
 .shadow_all_blur{s-moz-box-shadow:0 0 9px #fff;-webkit-box-shadow:0 0 9px #fff;box-shadow:20px 0 55px #eee;}
-.shadow_all{s-moz-box-shadow:0 0 9px #555;-webkit-box-shadow:0 0 9px #555;box-shadow:0 0 9px #555;}                  
+.shadow_all{s-moz-box-shadow:0 0 1px #555;-webkit-box-shadow:0 0 1px #555;box-shadow:0 0 1px #555;}                  
 .shadow_light{s-moz-box-shadow:0 0 1px #555;-webkit-box-shadow:0 0 1px #555;box-shadow:0 0 7px #888;}
 .shadow_all_white{s-moz-box-shadow:0 0 9px #fff;-webkit-box-shadow:0 0 9px #fff;box-shadow:0 0 9px #fff;}     

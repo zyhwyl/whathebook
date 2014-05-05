@@ -8,7 +8,7 @@
 <body>
 	<!--top-->
 	<div class="main_top shadow_all">
-	
+		<div class="logo"><img src="assets/img/logo/logo.png" /></div>
 	</div>
 	<!--top end-->
 	<!--main content-->
