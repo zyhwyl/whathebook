@@ -6,7 +6,6 @@
 	<?php include 'include/layout.php'; ?>
 </head>
 <body>
-	<div butter-bar ng-class="hide" class="butter_bar"><i class="icon-refresh icon-spin icon-2x"></i></div>
 	<!--top-->
 	<div class="main_top shadow_all">
 	
@@ -15,7 +14,9 @@
 	<!--main content-->
 	<div class="front_main_content">
 		<div class="front_body">
-			<div ng-view></div>
+			<div ng-view>
+				
+			</div>
 		</div>
 	</div>
 	<div class="clear"></div>

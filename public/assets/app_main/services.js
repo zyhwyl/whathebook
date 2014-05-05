@@ -1,4 +1,4 @@
-var services = angular.module("fjj.services",[]);
+var services = angular.module("whathebook.services",[]);
 
 services.factory('Users',['$http','$location',function($http,$location){
 	return{
